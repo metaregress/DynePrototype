@@ -8,7 +8,13 @@ class Game:
         self.teams = teams
         self.events = []
         self.turns = 0
-        self.game_map = game_map	
+        self.game_map = game_map
+
+    def addEvent(self, event):
+        self.events.append(event)
+        for team in teams:
+            for character in team.characters:
+                character.receiveEvent(event)	
 
 class Team:
     #Teams take a list of characters to include
@@ -41,6 +47,13 @@ class Character:
         self.profession_ability = None
         self.armor = 0
         self.protection = 0
+        self.game = None
+        self.resource = 0
+        self.resource_name = ""
+
+    def receiveEvent(self, event):
+        if self.profession_ability:    
+            self.profession_ability(self, event)
 
     def move(self, destination):
         #check distance to make sure it's within range
@@ -48,7 +61,9 @@ class Character:
 
     #takes another Character as a target
     def basicAttackMelee(self, target):
-        target.hit_points -= self.base_damage_melee - target.armor
+        damage_dealt = self.base_damage_melee - target.armor
+        target.hit_points -= damage_dealt
+        self.game.addEvent(DamageDealtEvent(self, target, damage_dealt)) 
 
 class Profession:
     #so for now I'm going with the idea that professions are added onto a Character; we'll see how this plays out 
@@ -71,6 +86,12 @@ class Profession:
         character.profession_ability = self.profession_ability
         character.initiative_tokens += self.initiative_token_delta
 
+class DamageDealtEvent(object):
+    def __init__(self, dealer, recipient, amount):
+        self.dealer = dealer
+        self.recipient = recipient = recipient
+        self.amount = amount
+
 def createSampleTeamOne():
     roster = []
     centurion_character = Character()
@@ -89,9 +110,14 @@ def createSampleTeamTwo():
     team = Team(roster)
     return team
 
+def centurionAbility(self, event):
+    if type(event) is DamageDealtEvent:
+        if event.recipient is self:
+            print "I'm hit!"
+
 #I know doing this makes me a  dummy. gotta go fast
 def Centurion():
-    centurion_ability = None
+    centurion_ability = centurionAbility
     centurion_dict = {'profession_ability': centurion_ability, 'basic_attack_melee_delta': 0, 'basic_attack_ranged_delta': 0, 'movement_delta': 4, 'hit_points': 45, 'initiative_token_delta': 1, 'name': 'Centurion'}
     centurion_profession = Profession(centurion_dict)
     return centurion_profession
@@ -109,12 +135,14 @@ if __name__ == "__main__":
     print "Team 1:"
     for char in game.teams[0].characters:
         print char.profession
+        char.game = game
     print "Team 2:"
     for char in game.teams[1].characters:
         print char.profession
-
+        char.game = game
     centurion = game.teams[0].characters[0]
     carnifex = game.teams[1].characters[0]
-    centurion.basicAttackMelee(carnifex)
-    print carnifex.hit_points
-
+    carnifex.basicAttackMelee(centurion)
+    
+    print centurion.hit_points
+    
