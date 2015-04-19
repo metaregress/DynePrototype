@@ -8,7 +8,13 @@ class Game:
         self.teams = teams
         self.events = []
         self.turns = 0
-        self.game_map = game_map	
+        self.game_map = game_map
+
+    def addEvent(self, event):
+        self.events.append(event)
+        for team in teams:
+            for character in team.characters:
+                character.receiveEvent(event)	
 
 class Team:
     #Teams take a list of characters to include
@@ -41,6 +47,10 @@ class Character:
         self.profession_ability = None
         self.armor = 0
         self.protection = 0
+        self.game = None
+
+    def receiveEvent(self, event):
+        print "event received!"
 
     def move(self, destination):
         #check distance to make sure it's within range
@@ -48,7 +58,9 @@ class Character:
 
     #takes another Character as a target
     def basicAttackMelee(self, target):
-        target.hit_points -= self.base_damage_melee - target.armor
+        damage_dealt = self.base_damage_melee - target.armor
+        target.hit_points -= damage_dealt
+        self.game.addEvent(DamageDealtEvent(self, target, damage_dealt)) 
 
 class Profession:
     #so for now I'm going with the idea that professions are added onto a Character; we'll see how this plays out 
@@ -70,6 +82,12 @@ class Profession:
         character.movement += self.movement_delta
         character.profession_ability = self.profession_ability
         character.initiative_tokens += self.initiative_token_delta
+
+class DamageDealtEvent:
+    def __init__(self, dealer, recipient, amount):
+        self.dealer = dealer
+        self.recipient = recipient = recipient
+        self.amount = amount
 
 def createSampleTeamOne():
     roster = []
@@ -109,12 +127,15 @@ if __name__ == "__main__":
     print "Team 1:"
     for char in game.teams[0].characters:
         print char.profession
+        char.game = game
     print "Team 2:"
     for char in game.teams[1].characters:
         print char.profession
-
+        char.game = game
     centurion = game.teams[0].characters[0]
     carnifex = game.teams[1].characters[0]
     centurion.basicAttackMelee(carnifex)
+    
+    print carnifex.game
     print carnifex.hit_points
-
+    
