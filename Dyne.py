@@ -48,9 +48,12 @@ class Character:
         self.armor = 0
         self.protection = 0
         self.game = None
+        self.resource = 0
+        self.resource_name = ""
 
     def receiveEvent(self, event):
-        print "event received!"
+        if self.profession_ability:    
+            self.profession_ability(self, event)
 
     def move(self, destination):
         #check distance to make sure it's within range
@@ -83,7 +86,7 @@ class Profession:
         character.profession_ability = self.profession_ability
         character.initiative_tokens += self.initiative_token_delta
 
-class DamageDealtEvent:
+class DamageDealtEvent(object):
     def __init__(self, dealer, recipient, amount):
         self.dealer = dealer
         self.recipient = recipient = recipient
@@ -107,9 +110,14 @@ def createSampleTeamTwo():
     team = Team(roster)
     return team
 
+def centurionAbility(self, event):
+    if type(event) is DamageDealtEvent:
+        if event.recipient is self:
+            print "I'm hit!"
+
 #I know doing this makes me a  dummy. gotta go fast
 def Centurion():
-    centurion_ability = None
+    centurion_ability = centurionAbility
     centurion_dict = {'profession_ability': centurion_ability, 'basic_attack_melee_delta': 0, 'basic_attack_ranged_delta': 0, 'movement_delta': 4, 'hit_points': 45, 'initiative_token_delta': 1, 'name': 'Centurion'}
     centurion_profession = Profession(centurion_dict)
     return centurion_profession
@@ -134,8 +142,7 @@ if __name__ == "__main__":
         char.game = game
     centurion = game.teams[0].characters[0]
     carnifex = game.teams[1].characters[0]
-    centurion.basicAttackMelee(carnifex)
+    carnifex.basicAttackMelee(centurion)
     
-    print carnifex.game
-    print carnifex.hit_points
+    print centurion.hit_points
     
