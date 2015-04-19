@@ -27,6 +27,7 @@ class Character:
         self.action_points = 5
         self.actives = []
         self.passives = []
+        self.equipment = []
         #split into nerfs/buffs? :\
         self.status_effects = []
         self.movement = 0
@@ -46,8 +47,8 @@ class Character:
         pass
 
     #takes another Character as a target
-    def basicAttack(self, target):
-        pass
+    def basicAttackMelee(self, target):
+        target.hit_points -= self.base_damage_melee - target.armor
 
 class Profession:
     #so for now I'm going with the idea that professions are added onto a Character; we'll see how this plays out 
@@ -111,3 +112,9 @@ if __name__ == "__main__":
     print "Team 2:"
     for char in game.teams[1].characters:
         print char.profession
+
+    centurion = game.teams[0].characters[0]
+    carnifex = game.teams[1].characters[0]
+    centurion.basicAttackMelee(carnifex)
+    print carnifex.hit_points
+
