@@ -1,4 +1,4 @@
-#The main class, runs the game and takes care of all the housekeeping. I'm probably going to keep all the classes here until it gets too hairy, then break them out as needs be
+#The main class, runs the game and takes care of all the housekeeping.
 
 import sys
 
