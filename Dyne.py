@@ -49,11 +49,11 @@ if __name__ == "__main__":
     game = Game(teams, None)
     print "Team 1:"
     for char in game.teams[0].characters:
-        print char.profession
+        print char.profession.name
         char.game = game
     print "Team 2:"
     for char in game.teams[1].characters:
-        print char.profession
+        print char.profession.name
         char.game = game
     centurion = game.teams[0].characters[0]
     carnifex = game.teams[1].characters[0]

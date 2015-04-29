@@ -1,8 +1,8 @@
 {
-    "basic_attack_melee_delta": 0,
-    "basic_attack_ranged_delta": 0,
-    "movement_delta": 4,
+    "melee_damage_bonus": 0,
+    "ranged_damage_bonus": 0,
+    "movement_bonus": 4,
     "hit_points": 45,
-    "initiative_token_delta": 1,
+    "initiative_token_bonus": 1,
     "name": "centurion"
 }

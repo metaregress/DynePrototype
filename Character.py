@@ -13,13 +13,16 @@ class Character:
         self.action_points = 5
         self.actives = []
         self.passives = []
-        self.equipment = []
+        self.inventory = []
+        self.equipped_weapon = None
+        self.equipped_armor = None
+        self.equipped_shield = None
         #split into nerfs/buffs? :\
         self.status_effects = []
         self.movement = 0
         self.hit_points = 0
-        self.base_damage_melee = 1
-        self.base_damage_ranged = 1
+        self.base_melee_damage = 1
+        self.base_ranged_damage = 1
         self.initiative_tokens = 1
         self.position_x = 0
         self.position_y = 0
@@ -28,18 +31,34 @@ class Character:
         self.armor = 0
         self.protection = 0
         self.game = None
+        #move these into profession...?
         self.resource = 0
         self.resource_name = ""
 
     def receiveEvent(self, event):
         if self.profession_ability:
             self.profession_ability(self, event)    
+    
     def move(self, destination):
         #check distance to make sure it's within range
         pass
+    
+    def getTotalMeleeDamage(self):
+        total_damage =  self.base_melee_damage + self.profession.melee_damage_bonus
+        if self.equipped_weapon is not None:
+            total_damage += self.equipped_weapon.melee_damage_bonus
+        return total_damage
+
+    def getTotalArmor(self):
+        total_armor = self.armor
+        if self.equipped_armor is not None:
+            total_armor += self.equipped_armor.armor_bonus
+        if self.equipped_shield is not None:
+            total_armor += self.equipped_shield.armor_bonus
+        return total_armor
 
     #takes another Character as a target
     def basicAttackMelee(self, target):
-        damage_dealt = self.base_damage_melee - target.armor
+        damage_dealt = self.getTotalMeleeDamage() - target.getTotalArmor()
         target.hit_points -= damage_dealt
-        self.game.addEvent(DamageDealtEvent.DamageDealtEvent(self, target, damage_dealt))
+        self.game.addEvent(DamageDealtEvent.DamageDealtEvent(self, target, damage_dealt, "melee"))

@@ -3,7 +3,7 @@ import DamageDealtEvent
 import json
 
 def centurionAbility(self, event):
-    if type(event) is DamageDealtEvent:
+    if type(event) is DamageDealtEvent.DamageDealtEvent:
         if event.recipient is self:
             print "I'm hit!"
 

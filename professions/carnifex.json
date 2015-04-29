@@ -1,8 +1,8 @@
 {
-    "basic_attack_melee_delta": 2,
-    "basic_attack_ranged_delta": 0,
-    "movement_delta": 5,
+    "melee_damage_bonus": 2,
+    "ranged_damage_bonus": 0,
+    "movement_bonus": 5,
     "hit_points": 35,
-    "initiative_token_delta": 2,
+    "initiative_token_bonus": 2,
     "name": "carnifex"
 }
