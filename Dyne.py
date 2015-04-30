@@ -5,6 +5,7 @@ import sys
 import Character
 import Profession
 from professions import Centurion, Carnifex
+from items import Longsword, Buckler, HideArmor
 
 class Game:
     #takes a list of teams to put into the fight and a map
@@ -29,6 +30,8 @@ def createSampleTeamOne():
     roster = []
     centurion_character = Character.Character()
     centurion_profession = Centurion.Centurion()
+    centurion_character.equipped_shield = Buckler.Buckler()
+    centurion_character.equipped_armor = HideArmor.HideArmor()
     centurion_profession.apply(centurion_character)
     roster.append(centurion_character)
     team = Team(roster)
@@ -39,6 +42,7 @@ def createSampleTeamTwo():
     carnifex_character = Character.Character()
     carnifex_profession = Carnifex.Carnifex()
     carnifex_profession.apply(carnifex_character)
+    carnifex_character.equipped_weapon = Longsword.Longsword()
     roster.append(carnifex_character)
     team = Team(roster)
     return team

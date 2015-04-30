@@ -1,0 +1,9 @@
+
+    "price": 5,
+    "item_type": "weapon",
+    "equippable": true,
+    "armor_bonus": 0,
+    "protection_bonus": 0,
+    "melee_damage_bonus": 2,
+    "ranged_damage_bonus": 0
+}

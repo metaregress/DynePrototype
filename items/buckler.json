@@ -1,0 +1,9 @@
+{
+    "price": 5,
+    "item_type": "shield",
+    "equippable": true,
+    "armor_bonus": 1,
+    "protection_bonus": 0,
+    "melee_damage_bonus": 0,
+    "ranged_damage_bonus": 0
+}
