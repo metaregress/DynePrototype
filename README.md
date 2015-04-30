@@ -10,3 +10,5 @@ DamageDealtEvent.py is the first event I've created. I'm still not sure what it 
 Character.py describes a character. Until it gets a profession and some abilities, it's just a half-initialized ball of stats with a move and attack ability.
 
 Profession.py is a container for profession information. The actual professions are detailed in the professions folder. Professions can be applied to Characters, conferring all their bonuses to the characters.
+
+Items are similar to professions in their structure; Items.py shows how they are built, and then instances are created from the py/json files in the items folder. I'm thinking about moving this to a monolithic ItemLoader class that will just grab all the json and build a dict of items, but that can be addressed later.
