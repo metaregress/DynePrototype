@@ -1,5 +1,6 @@
 class Item:
     def __init__(self, details):
+        self.name = details['name']
         self.price = details['price']
         self.item_type = details['item_type']
         self.equippable = details['equippable']
