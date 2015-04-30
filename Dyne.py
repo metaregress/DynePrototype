@@ -5,7 +5,7 @@ import sys
 import Character
 import Profession
 from professions import Centurion, Carnifex
-from items import Longsword, Buckler, HideArmor
+from items import Longsword, Buckler, HideArmor, ItemLoader
 
 class Game:
     #takes a list of teams to put into the fight and a map
@@ -49,6 +49,8 @@ def createSampleTeamTwo():
 
 if __name__ == "__main__":
     print "Welcome to Dyne."
+    items = ItemLoader.loadItems()
+    print items['longsword'].melee_damage_bonus
     teams = [createSampleTeamOne(), createSampleTeamTwo()]
     game = Game(teams, None)
     print "Team 1:"
