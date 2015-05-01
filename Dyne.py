@@ -6,7 +6,7 @@ import Character
 import Profession
 from professions import Centurion, Carnifex
 from items import Longsword, Buckler, HideArmor, ItemLoader
-
+from passive_abilities import IronSkinned, HeroicFortitude
 class Game:
     #takes a list of teams to put into the fight and a map
     def __init__(self, teams, game_map):
@@ -30,9 +30,13 @@ def createSampleTeamOne():
     roster = []
     centurion_character = Character.Character()
     centurion_profession = Centurion.Centurion()
+    centurion_profession.apply(centurion_character)
     centurion_character.equipped_shield = Buckler.Buckler()
     centurion_character.equipped_armor = HideArmor.HideArmor()
-    centurion_profession.apply(centurion_character)
+    iron_skinned = IronSkinned.IronSkinned()
+    centurion_character.addPassive(iron_skinned)
+    heroic_fortitude = HeroicFortitude.HeroicFortitude()
+    centurion_character.addPassive(heroic_fortitude)
     roster.append(centurion_character)
     team = Team(roster)
     return team
@@ -65,5 +69,5 @@ if __name__ == "__main__":
     carnifex = game.teams[1].characters[0]
     carnifex.basicAttackMelee(centurion)
     
-    print centurion.hit_points
+    print centurion.current_hit_points
     

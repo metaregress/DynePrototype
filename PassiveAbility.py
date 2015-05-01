@@ -1,0 +1,2 @@
+class PassiveAbility(object):
+    pass

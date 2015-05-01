@@ -13,7 +13,8 @@ class Profession:
     #rather than assigning everything here to modify the base values, I'm going to simply reference them from within Character.
     def apply(self, character):
         character.profession = self
-        character.hit_points = self.hit_points
+        character.current_hit_points = self.hit_points
+        character.max_hit_points = self.hit_points
         character.profession_ability = self.profession_ability
         #character.profession = self.name
         #character.profession_basic_damage_melee += self.basic_attack_melee_delta
