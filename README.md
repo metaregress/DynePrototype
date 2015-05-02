@@ -12,3 +12,5 @@ Character.py describes a character. Until it gets a profession and some abilitie
 Profession.py is a container for profession information. The actual professions are detailed in the professions folder. Professions can be applied to Characters, conferring all their bonuses to the characters.
 
 Items are similar to professions in their structure; Items.py shows how they are built, and then instances are created from the py/json files in the items folder. I'm thinking about moving this to a monolithic ItemLoader class that will just grab all the json and build a dict of items, but that can be addressed later.
+
+Passive abilities are currently all code instead of having json representations. This is because they tend to be very simple in the stat they change, or they have some strange rule(s) about how they are applied.
