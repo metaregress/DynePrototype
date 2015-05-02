@@ -2,6 +2,7 @@
     "name": "hide armor",
     "price": 5,
     "item_type": "armor",
+    "item_subtype": "light",
     "equippable": true,
     "armor_bonus": 1,
     "protection_bonus": 0,

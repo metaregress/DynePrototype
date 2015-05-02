@@ -56,6 +56,17 @@ class Character:
         total_damage =  self.base_melee_damage + self.profession.melee_damage_bonus
         if self.equipped_weapon is not None:
             total_damage += self.equipped_weapon.melee_damage_bonus
+        if self.passive_abilities is not {}:
+            for passive_name in self.passive_abilities:
+                passive = self.passive_abilities[passive_name]
+                if passive.type is "stat_bonus":
+                    if hasattr(passive, "melee_damage_bonus"):
+                        total_damage += passive.melee_damage_bonus
+                elif passive.type is "conditional_stat_bonus":
+                    if hasattr(passive, "melee_damage_bonus"):
+                        if passive.checkCondition(self):
+                            total_damage += passive.melee_damage_bonus
+                        
         return total_damage
 
     def getTotalRangedDamage(self):
@@ -72,9 +83,10 @@ class Character:
             total_armor += self.equipped_shield.armor_bonus
         if self.passive_abilities is not {}:
             for passive_name in self.passive_abilities:
-                if self.passive_abilities[passive_name].type is "stat_bonus":
-                    if hasattr(self.passive_abilities[passive_name], 'armor_bonus'):
-                        total_armor += self.passive_abilities[passive_name].armor_bonus
+                passive = self.passive_abilities[passive_name]
+                if passive.type is "stat_bonus":
+                    if hasattr(passive, "armor_bonus"):
+                        total_armor += passive.armor_bonus
         return total_armor
 
     #takes another Character as a target

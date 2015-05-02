@@ -6,7 +6,8 @@ import Character
 import Profession
 from professions import Centurion, Carnifex
 from items import Longsword, Buckler, HideArmor, ItemLoader
-from passive_abilities import IronSkinned, HeroicFortitude
+from passive_abilities import IronSkinned, HeroicFortitude, BladeMastery
+
 class Game:
     #takes a list of teams to put into the fight and a map
     def __init__(self, teams, game_map):
@@ -47,6 +48,8 @@ def createSampleTeamTwo():
     carnifex_profession = Carnifex.Carnifex()
     carnifex_profession.apply(carnifex_character)
     carnifex_character.equipped_weapon = Longsword.Longsword()
+    blade_mastery = BladeMastery.BladeMastery()
+    carnifex_character.addPassive(blade_mastery)
     roster.append(carnifex_character)
     team = Team(roster)
     return team
